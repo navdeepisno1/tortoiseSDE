@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    <div class="container mt-4">
+    <div class="container mt-4" style="padding-bottom: 80px;">
         <div class="row mt-3  ml-4 mr-4">
             <div class="col">
                 <div class="row">
@@ -102,6 +102,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div style="position: fixed;bottom: 0;left: 0;">
+        <input type="text" placeholder="Start Typing Here .." style="width: 100vw;padding: 12px;">
     </div>
 
     <script>
@@ -195,7 +198,7 @@
 
                 timeInterval = setInterval(() => {
                     if (Math.round(time) >= CONSTRAINTS.MAX_TIME) {
-                        eChar.innerHTML = CONSTRAINTS.MSG_FAILURE;
+                        setRandomCharacter();
                         time = CONSTRAINTS.MAX_TIME;
                         eTime.innerHTML = `${time.toFixed(3)}s`;
                         time = 0;
@@ -210,5 +213,7 @@
         }
     </script>
 </body>
+
+
 
 </html>
