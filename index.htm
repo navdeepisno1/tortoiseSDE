@@ -13,16 +13,18 @@
 </head>
 
 <body onload="onBodyLoad()">
-    <div class="container mt-4">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row pt-2 pl-2 pr-2 pb-2" style="background: #fff;color: #078D32;box-shadow: 0 2px 4px #000;">
             <div class="col">
-                <img style="border-radius: 50%;width: 56px;"
+                <img style="border-radius: 50%;width: 48px;"
                     src="https://media-exp1.licdn.com/dms/image/C560BAQEqybeg5u0yOw/company-logo_200_200/0/1643887891371?e=2147483647&v=beta&t=5_hA5tUW3Q1pWtcnA8D4xLES93sFarFAWmDTfRsT_YI">
             </div>
-            <div class="col" style="text-align: right;">
-                <h2><b>AlphaTest</b></h2>
+            <div class="col" style="text-align: right;line-height: 48px;font-size: 24px;">
+                <b>AlphaTest</b>
             </div>
         </div>
+    </div>
+    <div class="container mt-4">
         <div class="row mt-3  ml-4 mr-4">
             <div class="col">
                 <div class="row">
@@ -30,13 +32,14 @@
                         <div class="row">
                             <div class="col" style="text-align: center;">
                                 <br><br>
-                                <h1>
-                                    Type the Alphabet
+                                <h1 style="letter-spacing: 6px;">
+                                    <b>Type the Alphabet</b>
                                 </h1>
+                                <h5 class="mt-3">
+                                    <b>Typing game to see how fast you type.</b>
+                                </h5>
                                 <h6 class="mt-3">
-                                    Typing game to see how fast you type.
-                                    <br>
-                                    Timer stars when you start typing
+                                    <b>Timer stars when you start typing</b>
                                 </h6>
                             </div>
                         </div>
@@ -55,43 +58,46 @@
                 </div>
                 <div class="row mt-5">
                     <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                <h5>
-                                    <b>Time:</b>
-                                </h5>
-                            </div>
-                            <div class="col" style="text-align: right;">
-                                <h5>
-                                    <b><span id="time-elapsed">0.000s</span></b>
-                                </h5>
+                        <div class="card card-custom">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5>
+                                            <b>Time:</b>
+                                        </h5>
+                                    </div>
+                                    <div class="col" style="text-align: right;">
+                                        <h5>
+                                            <b><span id="time-elapsed">0.000s</span></b>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h5>
+                                            <b>Correct:</b>
+                                        </h5>
+                                    </div>
+                                    <div class="col" style="text-align: right;">
+                                        <h5>
+                                            <b><span id="correct-answers">0</span></b>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h5>
+                                            <b>Best Time:</b>
+                                        </h5>
+                                    </div>
+                                    <div class="col" style="text-align: right;">
+                                        <h5>
+                                            <b><span id="best-time"></span>s</b>
+                                        </h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <h5>
-                                    <b>Correct:</b>
-                                </h5>
-                            </div>
-                            <div class="col" style="text-align: right;">
-                                <h5>
-                                    <b><span id="correct-answers">0</span></b>
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <h5>
-                                    <b>Best Time:</b>
-                                </h5>
-                            </div>
-                            <div class="col" style="text-align: right;">
-                                <h5>
-                                    <b><span id="best-time"></span>s</b>
-                                </h5>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -104,6 +110,8 @@
             MAX_TIME: 20,
             MAX_CORRECT: 20,
             MIN_INTERVAL: 100,
+            MSG_SUCCESS: "Yeah",
+            MSG_FAILURE: "Oops",
         }
 
         let time = 0.000;
@@ -152,6 +160,8 @@
                     localStorage.setItem("best-time", time);
                 }
             }
+
+            getBestTime();
         }
 
         function setRandomCharacter() {
@@ -163,8 +173,8 @@
         document.onkeypress = (e) => {
             startTimer();
             if (correctAnswer == CONSTRAINTS.MAX_CORRECT) {
-                eChar.innerHTML = "SUCCESS";
-                clearInterval();
+                eChar.innerHTML = CONSTRAINTS.MSG_SUCCESS;
+                clearInterval(timeInterval);
                 setBestTime();
                 return;
             }
@@ -185,7 +195,7 @@
 
                 timeInterval = setInterval(() => {
                     if (Math.round(time) >= CONSTRAINTS.MAX_TIME) {
-                        eChar.innerHTML = "OOPS";
+                        eChar.innerHTML = CONSTRAINTS.MSG_FAILURE;
                         time = CONSTRAINTS.MAX_TIME;
                         eTime.innerHTML = `${time.toFixed(3)}s`;
                         time = 0;
