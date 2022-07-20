@@ -104,7 +104,7 @@
         </div>
     </div>
     <div style="position: fixed;bottom: 0;left: 0;">
-        <input type="text" placeholder="Start Typing Here .." style="width: 100vw;padding: 12px;">
+        <input type="text" placeholder="Start Typing Here .." style="width: 100vw;padding: 12px;" id="input">
     </div>
 
     <script>
@@ -178,6 +178,7 @@
             if (correctAnswer == CONSTRAINTS.MAX_CORRECT) {
                 eChar.innerHTML = CONSTRAINTS.MSG_SUCCESS;
                 clearInterval(timeInterval);
+                resetInput();
                 setBestTime();
                 return;
             }
@@ -197,12 +198,13 @@
                 isTimerOn = true;
 
                 timeInterval = setInterval(() => {
-                    if (Math.round(time) >= CONSTRAINTS.MAX_TIME) {
+                    if (Math.round(time) > CONSTRAINTS.MAX_TIME) {
                         setRandomCharacter();
                         time = CONSTRAINTS.MAX_TIME;
                         eTime.innerHTML = `${time.toFixed(3)}s`;
                         time = 0;
                         isTimerOn = false;
+                        resetInput();
                         clearInterval(timeInterval);
                         return;
                     }
@@ -210,6 +212,10 @@
                     eTime.innerHTML = `Time: ${time.toFixed(3)}s`;
                 }, CONSTRAINTS.MIN_INTERVAL);
             }
+        }
+
+        function resetInput() {
+            document.getElementById("input").value = "";
         }
     </script>
 </body>
